@@ -35,7 +35,7 @@ RUN sed -i 's/#log_path = syslog/log_path = \/var\/log\/dovecot\/dovecot.log/' /
     # imap idle
  && sed -i 's/#imap_idle_notify_interval =.*/imap_idle_notify_interval = 29 mins/' /etc/dovecot/conf.d/20-imap.conf \
     # fix getmail imap issue with large emails
- && sed -i 's/^_MAXLINE =.*/_MAXLINE = 10000000/' /usr/lib/python2.7/imaplib.py
+ && sed -i 's/^_MAXLINE =.*/_MAXLINE = 10000000/' /usr/lib/python3.11/imaplib.py
     # fix permission issues with stats-writer
 ADD dovecot-conf.d/20-stats.conf /etc/dovecot/conf.d/20-stats.conf
 
