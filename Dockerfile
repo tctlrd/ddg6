@@ -1,16 +1,16 @@
 # Private email gateway with getmail and dovecot
 #
-# Author: gw0 [http://gw.tnode.com/] <gw.2021@ena.one>
+# Author: tctlrd [https://github.com/tctlrd/]
 
-FROM debian:buster-slim
-MAINTAINER gw0 [http://gw.tnode.com/] <gw.2021@ena.one>
+FROM debian:bookworm-slim
+MAINTAINER tctlrd [https://github.com/tctlrd/]
 
 # install debian packages
 ENV DEBIAN_FRONTEND noninteractive
 RUN apt-get update -qq \
  && apt-get install --no-install-recommends -y \
     cron \
-    getmail \
+    getmail6 \
     dovecot-imapd \
     dovecot-managesieved \
  && apt-get clean \
