@@ -48,7 +48,5 @@ done
 echo "Starting services..."
 /etc/init.d/dovecot start
 /etc/init.d/cron start
-# start log
-tail --follow --retry /var/log/dovecot/dovecot.log /var/log/getmail/$ACC.log
 
 exec "$@"
