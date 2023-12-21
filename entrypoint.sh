@@ -41,6 +41,12 @@ for USER in $(ls -1 /home); do
     touch "$LOG"
     chown "$host_uid:$host_gid" "$LOG"
     chmod 644 "$LOG"
+    # setup fetch scripts
+    FSC="/home/$USER/.getmail/fetch-$ACC.sh"
+    echo -e "(getmail --rcfile=\"$RC\") >> \"$LOG\" 2>&1" >> $FSC"
+    chown "$host_uid:$host_gid" "$FSC"
+    chmod 755 "$FSC"
+    su $USER -c "$FSC"
   done
 done
 
@@ -49,6 +55,6 @@ echo "Starting services..."
 /etc/init.d/dovecot start
 /etc/init.d/cron start
 
-tail -F /var/log/dovecot/dovecot.log ""/var/log/getmail/*.log""
 
+tail -F /var/log/dovecot/dovecot.log ""/var/log/getmail/*.log""
 exec "$@"
