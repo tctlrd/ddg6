@@ -41,7 +41,7 @@ for USER in $(ls -1 /home); do
     touch "$LOG"
     chown "$host_uid:$host_gid" "$LOG"
     chmod 644 "$LOG"
-    su $USER -c "(date; flock -n ~/.getmail/lock-$ACC getmail --rcfile=\"$RC\" --idle INBOX) >> \"/var/log/getmail/$ACC.log\" 2>&1"
+    su $USER -c "flock -n ~/.getmail/lock-$ACC getmail --rcfile="$RC" --idle INBOX"
   done
 done
 
