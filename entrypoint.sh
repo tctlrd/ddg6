@@ -41,7 +41,10 @@ for USER in $(ls -1 /home); do
     touch "$LOG"
     chown "$host_uid:$host_gid" "$LOG"
     chmod 644 "$LOG"
-    su $USER -c "timout 2m getmail --rcfile="$RC" --idle INBOX"
+    FFS="timout 2m getmail --rcfile=\"$RC\" --idle INBOX"
+    echo -e ”FFS" >> /etc/rungm.sh
+    chown "$host_uid:$host_gid" /etc/rungm.sh
+    chmod 755 "/etc/rungm.sh"
   done
 done
 
@@ -50,6 +53,7 @@ echo "Starting services..."
 /etc/init.d/dovecot start
 /etc/init.d/cron start
 
+/etc/rungm.sh
 
 tail -F /var/log/dovecot/dovecot.log ""/var/log/getmail/*.log""
 exec "$@"
