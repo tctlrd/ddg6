@@ -10,6 +10,7 @@ ENV DEBIAN_FRONTEND noninteractive
 RUN apt-get update -qq \
  && apt-get install --no-install-recommends -y \
     cron \
+    procps \
     getmail6 \
     dovecot-imapd \
     dovecot-managesieved \
