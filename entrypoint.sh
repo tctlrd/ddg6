@@ -41,7 +41,7 @@ for USER in $(ls -1 /home); do
     touch "$LOG"
     chown "$host_uid:$host_gid" "$LOG"
     chmod 644 "$LOG"
-    echo -e "timout 2m getmail --rcfile=\"$RC\" --idle INBOX" >> /etc/rungm.sh
+    echo -e "timeout 2m getmail --rcfile=\"$RC\" --idle INBOX" >> /etc/rungm.sh
     chown "$host_uid:$host_gid" /etc/rungm.sh
     chmod 755 "/etc/rungm.sh"
   done
