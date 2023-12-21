@@ -41,7 +41,7 @@ ADD dovecot-conf.d/20-stats.conf /etc/dovecot/conf.d/20-stats.conf
 
 # setup entrypoint
 ENV TZ=UTC
-ENV CRON='*/30 * * * *'
+ENV CRON="*/30 * * * *"
 ENV DEFAULT_PASSWD="replaceMeNow"
 ADD entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
