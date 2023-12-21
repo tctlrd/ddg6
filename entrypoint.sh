@@ -42,7 +42,7 @@ for USER in $(ls -1 /home); do
     chown "$host_uid:$host_gid" "$LOG"
     chmod 644 "$LOG"
     # first fetch
-    su $USER -c "getmail --rcfile=\"$RC\""
+    su $USER -c "getmail --rcfile=\"$RC\" | tee "$LOG" | less"
     echo "Running first mail fetch for $ACC as $USER with getmail."
   done
 done
