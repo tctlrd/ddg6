@@ -43,6 +43,7 @@ for USER in $(ls -1 /home); do
     chmod 644 "$LOG"
     # first fetch
     su $USER -c "getmail --rcfile="$RC" 2>&1 | tee "$LOG""
+    echo "su $USER -c "getmail --rcfile="$RC" 2>&1 | tee "$LOG"""
     echo "Running first mail fetch for $ACC as $USER with getmail."
   done
 done
