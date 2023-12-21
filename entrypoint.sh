@@ -35,15 +35,13 @@ for USER in $(ls -1 /home); do
   for RC in $(ls -1 /home/$USER/.getmail/getmailrc-*); do
     echo "- $RC"
     ACC=${RC##*/getmailrc-}
+    echo -e "@reboot $USER (date; flock -n ~/.getmail/lock-$ACC getmail --rcfile=\"$RC\" --idle INBOX) >> \"/var/log/getmail/$ACC.log\" 2>&1" >> /etc/cron.d/getmail
     echo -e "${CRON:1:-1} $USER (date; flock -n ~/.getmail/lock-$ACC getmail --rcfile=\"$RC\" --idle INBOX) >> \"/var/log/getmail/$ACC.log\" 2>&1" >> /etc/cron.d/getmail
     # fix log permissions
     LOG="/var/log/getmail/$ACC.log"
     touch "$LOG"
     chown "$host_uid:$host_gid" "$LOG"
     chmod 644 "$LOG"
-    # first fetch
-    su $USER -c "getmail --rcfile=\"$RC\""
-    echo "Running first mail fetch for $ACC as $USER with getmail."
   done
 done
 
