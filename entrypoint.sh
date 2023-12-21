@@ -41,12 +41,13 @@ for USER in $(ls -1 /home); do
     touch "$LOG"
     chown "$host_uid:$host_gid" "$LOG"
     chmod 644 "$LOG"
-    # setup fetch scripts
-    FSC="/home/$USER/.getmail/fetch-$ACC.sh"
-    echo -e "(getmail --rcfile=\"$RC\") >> \"$LOG\" 2>&1" >> $FSC"
-    chown "$host_uid:$host_gid" "$FSC"
-    chmod 755 "$FSC"
-    su $USER -c "$FSC"
+    # setup & run first fetch script
+    FFS="/home/$USER/.getmail/fetch.sh"
+    echo -e "getmail --rcfile=\"$RC\""\n"" >> "$FFS"
+    chown "$host_uid:$host_gid" "$FFS"
+    chmod 755 "$FFS"
+    su $USER -c "$FFS"
+    echo "Running first mail fetch for $ACC as $USER with getmail."
   done
 done
 
