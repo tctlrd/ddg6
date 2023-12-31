@@ -1,11 +1,10 @@
-docker-dovecot-getmail
+docker-dovecot-getmail6
 ======================
 
-***docker-dovecot-getmail*** is a [*Docker*](http://www.docker.com/) image based on *Debian* implementing a private email gateway with [*dovecot*](http://en.wikipedia.org/wiki/Dovecot_(software)) and [*getmail*](http://en.wikipedia.org/wiki/Getmail) for gathering emails from multiple accounts on a private server (IMAP), but using a public email infrastructure for sending (SMTP).
+***docker-dovecot-getmail6*** is a docker image containing an IMAP server and email fetcher: [*dovecot*](http://en.wikipedia.org/wiki/Dovecot_(software)) and [*getmail6*](https://getmail6.org/). It is used for gathering emails from multiple accounts on a private IMAP server while using a remote SMTP server for sending emails.
 
-It is a *Docker* container realizing a similar architecture to:
-
-- <http://joel.porquet.org/wiki/hacking/getmail_dovecot/>
+This *docker* container is inspired the work of Joel Porquet:
+<http://web.archive.org/web/20200807233801/https://joel.porquet.org/wiki/hacking/getmail_dovecot/>
 
 ```
 +-----------+              +-----------+               +--------------+
@@ -19,14 +18,8 @@ It is a *Docker* container realizing a similar architecture to:
 | +-------+ |      |       |           |               |  MAIL CLIENT +---+
 +-----------+      |       +-----------+               +--------------+   |
                    +------------------------------------------------------+
+Joel's original diagram.
 ```
-
-Open source project:
-
-- <i class="fa fa-fw fa-github-square"></i> github: <http://github.com/gw0/docker-dovecot-getmail/>
-- <i class="fa fa-fw fa-laptop"></i> technology: *debian*, *dovecot*, *getmail*
-- <i class="fa fa-fw fa-database"></i> docker hub: <https://hub.docker.com/r/gw000/dovecot-getmail/>
-
 
 Usage
 =====
@@ -34,10 +27,10 @@ Usage
 Required volumes:
 
 - `/home`: mounted users directories (`Maildir` in fs layout, `sieve`, `.getmail`)
-- `/etc/ssl/private`: mounted SSL/TLS certificates (`dovecot.crt`, `dovecot.key`)
+- `/etc/ssl/private`: mounted TLS certificates (`tls.crt`, `tls.key`)
 
 Environment Variables
-- `CRON`: getmail will be called by cronjob to retrieve emails. Specify your schedule in cron format. Default is every 30 minutes `CRON="*/30 * * * *"` (don't forget the quotes). Keep in mind that  some mail providers will block high frequent retrieving.
+- `CRON`: getmail will be called by cronjob to retrieve emails. Specify your schedule in cron format. Default is every 30 minutes `CRON="*/30 * * * *"` (don't forget the quotes). Keep in mind that some mail providers will block high frequent retrieving.
 - `TZ`= set local timezone. Default is `TZ=UTC`
 
 Prepare your getmailrc account configurations per user (`/srv/mail/home/user/.getmail/getmailrc-user@email.invalid`):
@@ -66,6 +59,23 @@ received = true
 verbose = 1
 ```
 
+And finally start it with docker, or your container manager of choice (podman, kubernates etc.).
+
+```bash
+$ docker run -d -v /srv/mail/home:/home -v /srv/mail/cron.d:/etc/cron.d -v /srv/mail/ssl:/etc/ssl/private:ro -p 143 -p 993 -p 4190 --name mail ghcr.io/tctlrd/ddg6
+```
+
+Or use *docker-compose* (check out `docker-compose.example.yml`).
+
+Users are created automatically with default password (`replaceMeNow`) on first start. To reset user passwords (of a running container):
+
+```bash
+$ docker exec -it mail passwd [user]
+```
+
+Sieve Filters
+========
+
 If you are using Sieve filters and want a `Refilter` mailbox to trigger their refiltering, create a refilter configuration per user (`/srv/mail/home/user/.getmail/getmailrc-refilter`):
 
 ```
@@ -92,33 +102,12 @@ received = false
 verbose = 1
 ```
 
-
-Do not forget to place your SSL certificates as `/srv/mail/ssl/dovecot.crt` and `/srv/mail/ssl/dovecot.key`. SSL is required!
-
-And finally start it with *docker*:
-
-```bash
-$ docker run -d -v /srv/mail/home:/home -v /srv/mail/cron.d:/etc/cron.d -v /srv/mail/ssl:/etc/ssl/private:ro -p 143 -p 993 -p 4190 --name mail gw000/dovecot-getmail
-```
-
-Or use *docker-compose* (check out `docker-compose.example.yml`).
-
-Users are created automatically with default password (`replaceMeNow`) on first start. To reset user passwords (of a running container):
-
-```bash
-$ docker exec -it mail passwd user
-```
-
-
-Feedback
+Pull Requests are Welcome
 ========
 
-If you encounter any bugs or have feature requests, please file them in the [issue tracker](http://github.com/gw0/docker-dovecot-getmail/issues/) or even develop it yourself and submit a pull request over [GitHub](http://github.com/gw0/docker-dovecot-getmail/).
-
+Go ahead and improve this project and submit a pull request.
 
 License
 =======
-
-Copyright &copy; 2016-2021 *gw0* [<http://gw.tnode.com/>] &lt;<gw.2021@ena.one>&gt;
 
 This library is licensed under the [GNU Affero General Public License 3.0+](LICENSE_AGPL-3.0.txt) (AGPL-3.0+). Note that it is mandatory to make all modifications and complete source code of this library publicly available to any user.
