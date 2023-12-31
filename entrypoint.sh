@@ -1,7 +1,5 @@
 #!/bin/bash
 # Docker entrypoint
-#
-# Author: gw0 [http://gw.tnode.com/] <gw.2021@ena.one>
 set -e
 
 # initialize on first run
