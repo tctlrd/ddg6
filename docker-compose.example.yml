@@ -1,11 +1,10 @@
-# Private email gateway
+# IMAP server and email fetcher.
 
 version: '2'
 
 services:
-  getmail_dovecot:
-    #build: http://github.com/gw0/docker-dovecot-getmail.git
-    image: gw000/dovecot-getmail:latest
+  dg6:
+    image: ghcr.io/tctlrd/ddg6:latest
     volumes:
       - /srv/mail/home/:/home/
       - /srv/mail/ssl:/etc/ssl/private:ro
