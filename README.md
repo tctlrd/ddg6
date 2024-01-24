@@ -1,7 +1,7 @@
-docker-dovecot-getmail6
+getmail-container
 ======================
 
-***docker-dovecot-getmail6*** is a docker image containing an IMAP server and email fetcher: [*dovecot*](http://en.wikipedia.org/wiki/Dovecot_(software)) and [*getmail6*](https://getmail6.org/). It is used for gathering emails from multiple accounts on a private IMAP server while using a remote SMTP server for sending emails.
+***getmail-container*** is a docker image containing an IMAP server and email fetcher: [*dovecot*](http://en.wikipedia.org/wiki/Dovecot_(software)) and [*getmail6*](https://getmail6.org/). It is used for gathering emails from multiple accounts on a private IMAP server while using a remote SMTP server for sending emails.
 
 This *docker* container is inspired the work of Joel Porquet:  
 <http://web.archive.org/web/20200807233801/https://joel.porquet.org/wiki/hacking/getmail_dovecot/>
