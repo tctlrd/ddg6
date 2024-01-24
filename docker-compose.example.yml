@@ -3,8 +3,8 @@
 version: '2'
 
 services:
-  dg6:
-    image: ghcr.io/tctlrd/ddg6:latest
+  getmail:
+    image: ghcr.io/tctlrd/getmail-container:latest
     volumes:
       - /srv/mail/home/:/home/
       - /srv/mail/ssl:/etc/ssl/private:ro
