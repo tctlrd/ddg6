@@ -49,7 +49,7 @@ mailboxes = ("INBOX", "Sent", "Spam")
 [destination]
 type = MDA_external
 path = /usr/lib/dovecot/deliver
-arguments = ("-e",)
+arguments = ("-e", "-m", "%(mailbox)")
 
 [options]
 read_all = false
