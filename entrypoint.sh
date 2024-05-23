@@ -46,6 +46,7 @@ done
 echo "Starting services..."
 /etc/init.d/dovecot start
 /etc/init.d/cron start
+run-parts /etc/cron.d
 
 tail -F /var/log/dovecot/dovecot.log ""/var/log/getmail/*.log""
 exec "$@"
